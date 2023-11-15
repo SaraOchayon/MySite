@@ -13,5 +13,6 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public int Id { get; set; }
+    public int UserId { get; set; }
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

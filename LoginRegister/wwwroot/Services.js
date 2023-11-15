@@ -55,7 +55,6 @@ const Register = async() => {
     }
 
 }
-
 const MoveToRegister = () => {
     document.getElementById("register").style.visibility = "visible";
 }
@@ -69,7 +68,7 @@ const Update = () => {
 }
 const Save = async () => {
     const userString = sessionStorage.getItem("User")
-    const id = JSON.parse(userString).id
+    const id = JSON.parse(userString).userId
     const userName = document.getElementById("userName").value
     const password = document.getElementById("password").value
     const firstName = document.getElementById("firstName").value

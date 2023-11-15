@@ -25,7 +25,6 @@ public class UserSevices : IUserSevices
     {
         return await UserRepository.GetUserById(id);
     }
-
     public async Task<bool> UpdateUserAsync(int id, User userToUpdate)
     {
         return await UserRepository.UpdateUser(id, userToUpdate);

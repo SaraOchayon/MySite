@@ -18,6 +18,10 @@ public partial class StshopContext : DbContext
 
     public virtual DbSet<Category> Categories { get; set; }
 
+    public virtual DbSet<Order> Orders { get; set; }
+
+    public virtual DbSet<OrderItem> OrderItems { get; set; }
+
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -38,6 +42,38 @@ public partial class StshopContext : DbContext
             entity.Property(e => e.CategoryName)
                 .HasMaxLength(50)
                 .HasColumnName("categoryName");
+        });
+
+        modelBuilder.Entity<Order>(entity =>
+        {
+            entity.ToTable("Order");
+
+            entity.Property(e => e.OrderId).HasColumnName("orderId");
+            entity.Property(e => e.OrderDate)
+                .HasColumnType("datetime")
+                .HasColumnName("orderDate");
+            entity.Property(e => e.OrderSum).HasColumnName("orderSum");
+            entity.Property(e => e.UserId).HasColumnName("userId");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Order_User");
+        });
+
+        modelBuilder.Entity<OrderItem>(entity =>
+        {
+            entity.ToTable("orderItem");
+
+            entity.Property(e => e.OrderItemId).HasColumnName("orderItemId");
+            entity.Property(e => e.OrderId).HasColumnName("orderId");
+            entity.Property(e => e.ProdId).HasColumnName("productId");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+            entity.HasOne(d => d.Prod).WithMany(p => p.OrderItems)
+                .HasForeignKey(d => d.ProdId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_orderItem_products");
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -68,6 +104,7 @@ public partial class StshopContext : DbContext
         {
             entity.ToTable("User");
 
+            entity.Property(e => e.UserId).HasColumnName("userId");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(50)
                 .IsUnicode(false);

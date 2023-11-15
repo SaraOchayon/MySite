@@ -1,72 +1,41 @@
 ﻿using Entities;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-
+using Microsoft.EntityFrameworkCore;
 namespace Repositories;
 
 public class UserRepositories : IUserRepositories
 {
-    public string filePath = "M:\\web api\\users.txt";
-    public async Task <User> AddUser(User user)
-    {
-        int numberOfUsers = System.IO.File.ReadLines(filePath).Count();
 
-        user.Id = numberOfUsers;
-        string userJson = JsonSerializer.Serialize(user);
-        await System.IO.File.AppendAllTextAsync(filePath, userJson + Environment.NewLine);
-        return user;
+    StshopContext _StshopContext;
+
+    public UserRepositories(StshopContext stshopContext)
+    {
+        _StshopContext = stshopContext;
     }
 
+    public async Task <User> AddUser(User user)
+    {      
+        await _StshopContext.Users.AddAsync(user);
+        await _StshopContext.SaveChangesAsync();
+        return user;
+
+
+    }
     public async Task<User?> GetUserByEmailAndPassword(string userName, string password)
     {
-        using (StreamReader reader = System.IO.File.OpenText(filePath))
-        {
-            string? currentUserInFile;
-            while ((currentUserInFile = await reader.ReadLineAsync()) != null)
-            {
-                User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-                if (user?.UserName == userName && user?.Password == password)
-                    return user;
-            }
-        }
-        return null;
+        return  await _StshopContext.Users.Where(u => u.UserName == userName && u.Password == password).FirstOrDefaultAsync();           
     }
     public async Task<User?> GetUserById(int id)
     {
-        using (StreamReader reader = System.IO.File.OpenText(filePath))
-        {
-            string? currentUserInFile;
-            while ((currentUserInFile = await reader.ReadLineAsync()) != null)
-            {
-                User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-                if (user?.Id == id )
-                    return user;
-            }
-        }
-        return null;
+        return await _StshopContext.Users.FindAsync(id);
     }
-
-    public async Task<bool> UpdateUser(int id, User userToUpdate)
+    public async Task<bool> UpdateUser(int id, User user)
     {
-        string textToReplace = string.Empty;
-        using (StreamReader reader = System.IO.File.OpenText(filePath))
-        {
-            string currentUserInFile;
-            while ((currentUserInFile = await reader.ReadLineAsync()) != null)
-            {
-                User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-                if (user.Id == id)
-                    textToReplace = currentUserInFile;
-            }
-        }
-
-        if (textToReplace != string.Empty)
-        {
-            string text = System.IO.File.ReadAllText(filePath);
-            text = text.Replace(textToReplace, JsonSerializer.Serialize(userToUpdate));
-            System.IO.File.WriteAllText(filePath, text);
-            return true;
-        }
-        return false;
+        user.UserId = id;
+        //var userToUpdate = await _StshopContext.Users.FindAsync(id);
+        var res=  _StshopContext.Users.Update(user) ;
+        await _StshopContext.SaveChangesAsync();
+        return res!=null;
     }
 }

@@ -26,6 +26,7 @@ namespace LoginRegister.Controllers
         //        return BadRequest();
         //    return Ok(user);
         //}
+
         // GET: api/<loginController>
         [HttpGet]
         public  async Task<ActionResult> Get([FromQuery] string userName, [FromQuery]  string password)
@@ -35,15 +36,12 @@ namespace LoginRegister.Controllers
                 return BadRequest();
             return Ok(user);
         }
-
-  
-
         // POST api/<loginController>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] User user)
         {
             User newUser =  await userService.AddUser(user);
-            return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
+            return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser);
         }
 
         [HttpPost("checkPassword")]
@@ -56,6 +54,7 @@ namespace LoginRegister.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] User userToUpdate)
         {
+           
             if ( await userService.UpdateUserAsync(id, userToUpdate))
                 return Ok();
             return BadRequest();
