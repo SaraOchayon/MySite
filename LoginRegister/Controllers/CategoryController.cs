@@ -11,6 +11,12 @@ namespace MySite.Controllers
     public class CategoryController : ControllerBase
     {
         ICategoryServices categoryService;
+
+        public CategoryController(ICategoryServices categoryService)
+        {
+            this.categoryService = categoryService;
+        }
+
         // GET: api/<CategoryController>
         [HttpGet]
         public async Task<IEnumerable<Category>> Get()
@@ -26,22 +32,6 @@ namespace MySite.Controllers
             return await categoryService.GetCategoryById(id);
         }
 
-        // POST api/<CategoryController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<CategoryController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CategoryController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+     
     }
 }

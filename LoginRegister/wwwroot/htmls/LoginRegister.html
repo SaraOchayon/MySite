@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="../scripts/Services.js"></script>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <label>user name</label>
+    <input id="userNameRegister" />
+    <br />    <br />
+    <label>password</label>
+    <input id="passwordRegister" type="password" />
+    <br />    <br />
+    <button onclick="Login()">login</button>
+    <br />    <br />
+    <button onclick="MoveToRegister()">new user</button>
+    <br />    <br /> <br />    <br />
+
+    <div id="register" style="visibility:hidden">
+        <label>user name</label>
+        <input id="userName" />
+        <br />    <br />
+        <label>password</label>
+        <input id="password" type="password" />
+     
+        <button onclick="checkPassword()">checkPassword</button>
+         <progress id="progress" value="0" max="4"></progress><br />
+        <br />    <br />
+        <label>first name</label>
+        <input id="firstName" />
+        <br />    <br />
+        <label>last name</label>
+        <input id="lastName" />
+        <br />    <br />
+
+        <button onclick="Register()">register</button>
+    </div>
+    
+</body>
+</html>

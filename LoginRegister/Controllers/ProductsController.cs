@@ -12,11 +12,19 @@ namespace MySite.Controllers
     {
         IProductServices productServices;
 
-      // GET: api/<ProductsController>
-        [HttpGet]
-        public async Task<ActionResult<Product>> GetProducts()
+        public ProductsController(IProductServices productServices)
         {
-            List<Product> products = (List<Product>)await productServices.GetProducts();
+            this.productServices = productServices;
+        }
+
+        // GET: api/<ProductsController>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts(int? position, int? skip, string? desc, int? minPrice, int? maxPrice, [FromQuery] int?[] categoryIds)
+        {
+
+            //Console.WriteLine(categoryIds[0]);
+            List<Product> products = (List<Product>) await productServices.GetProducts( position,  skip,   desc,   minPrice,   maxPrice,  categoryIds);
+
 
             if (products == null)
                 return BadRequest();
@@ -25,29 +33,8 @@ namespace MySite.Controllers
       
        
 
-        // GET api/<ProductsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+   
 
-        // POST api/<ProductsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ProductsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ProductsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
     }
 }

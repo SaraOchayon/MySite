@@ -11,23 +11,18 @@ namespace MySite.Controllers
     public class OrderController : ControllerBase
     {
         IOrderRepositories orderService;
-        // GET: api/<OrderController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+
+        public OrderController(IOrderRepositories orderService)
         {
-            return new string[] { "value1", "value2" };
+            this.orderService = orderService;
         }
 
-        // GET api/<OrderController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+
+
 
         // POST api/<OrderController>
         [HttpPost]
-       
+
         public async Task<ActionResult<Order>> Create([FromBody] Order order)
         {
 
@@ -35,18 +30,8 @@ namespace MySite.Controllers
             return CreatedAtAction(nameof(GetType), new { id = newOrder.OrderId }, newOrder);
 
         }
-        
 
-        // PUT api/<OrderController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
-        // DELETE api/<OrderController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+
     }
 }

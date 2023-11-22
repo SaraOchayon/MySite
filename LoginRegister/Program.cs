@@ -6,8 +6,18 @@ using Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<IUserRepositories, UserRepositories>();
-builder.Services.AddScoped<IUserSevices, UserSevices>();
+builder.Services.AddTransient<IUserRepositories, UserRepositories>();
+builder.Services.AddTransient<IUserSevices, UserSevices>();
+
+builder.Services.AddTransient<IProductRepositories, ProductRepositories>();
+builder.Services.AddTransient<IProductServices, ProductServices>();
+
+builder.Services.AddTransient<IOrderRepositories, OrderRepositories>();
+builder.Services.AddTransient<IOrderServices, OrderServices>();
+
+builder.Services.AddTransient<ICategoryRepositories, CategoryRepositories>();
+builder.Services.AddTransient<ICategoryServices, CategoryServices>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

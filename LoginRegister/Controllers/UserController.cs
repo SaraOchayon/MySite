@@ -10,11 +10,11 @@ namespace LoginRegister.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class userController : ControllerBase
+    public class UserController : ControllerBase
     {
         IUserSevices userService ;
 
-        public userController(IUserSevices userService)
+        public UserController(IUserSevices userService)
         {
             this.userService = userService;
         }
@@ -31,6 +31,7 @@ namespace LoginRegister.Controllers
         [HttpGet]
         public  async Task<ActionResult> Get([FromQuery] string userName, [FromQuery]  string password)
         {
+            //to do dto 
             User user =  await userService.GetUserByUserNameAndPassword(userName, password);
             if (user == null)
                 return BadRequest();

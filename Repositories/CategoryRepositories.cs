@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Repositories
 
         public async Task<IEnumerable<Category>> GetCategories()
         {
-            return (IEnumerable<Category>)await _StshopContext.Categories.FindAsync();
+            return await _StshopContext.Categories.ToListAsync();
         }
         public async Task<Category?> GetCategoryById(int id)
         {
