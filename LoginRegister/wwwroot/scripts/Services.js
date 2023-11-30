@@ -1,24 +1,31 @@
 ﻿
 const Login = async () => {
     try {
-     
-        const userName = document.getElementById("userNameRegister").value;
-        const password = document.getElementById("passwordRegister").value;
-      
-        const res = await fetch(`/api/User?userName=${userName}&password=${password}`)
-      
+        const user = {
+            userName : document.getElementById("userNameRegister").value,
+            password : document.getElementById("passwordRegister").value
+        }
+       /* const res = await fetch(`/api/login/User?userName=${userName}&password=${password}`)*/
+        const res = await fetch("api/User/login", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        
+        })
         if (!res.ok)
             throw new Error("the user doesnt exist")
      
         const data = await res.json()
 
-        sessionStorage.setItem("User", JSON.stringify(data))
+        localStorage.setItem("User", JSON.stringify(data))
         
         window.location.href = '../../htmls/Update.html'
        
     }
     catch (ex) {
-        alert( "sign in because:"+ex)
+        alert( "sign in because:"+ex.message)
     }
 }
 const Register = async() => {

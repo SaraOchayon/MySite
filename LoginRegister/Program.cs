@@ -1,7 +1,9 @@
-using LoginRegister.Controllers;
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using Repositories;
 using Services;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,12 +20,14 @@ builder.Services.AddTransient<IOrderServices, OrderServices>();
 builder.Services.AddTransient<ICategoryRepositories, CategoryRepositories>();
 builder.Services.AddTransient<ICategoryServices, CategoryServices>();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddDbContext<StshopContext>(option => option.UseSqlServer
-("Server=srv2\\pupils;Database=STshop;Trusted_Connection=True;TrustServerCertificate=True"));
+builder.Services.AddDbContext<StshopContext>(option => option.UseSqlServer(builder.Configuration["connectionString"]));
+
+builder.Host.UseNLog();
 
 var app = builder.Build();
 

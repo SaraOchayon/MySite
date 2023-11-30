@@ -12,13 +12,13 @@ for ( i = 0; i < productList.length; i++)
     drawProduct(productList[i])
     if (productList[i].price > max)
         max = productList[i].price
-    else if (productList[i].price < min)
+    if (productList[i].price < min)
         min = productList[i].price
     }
     document.getElementById("minPrice").placeholder = min;
     document.getElementById("maxPrice").placeholder = max;
-    console.log(max)
-    console.log(min)
+   
+    
 
 }
 const showCategories = async () => {

@@ -1,4 +1,6 @@
-﻿using Entities;
+﻿using AutoMapper;
+using DTO;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -11,26 +13,26 @@ namespace MySite.Controllers
     public class CategoryController : ControllerBase
     {
         ICategoryServices categoryService;
+        private readonly IMapper _mapper;
 
-        public CategoryController(ICategoryServices categoryService)
+        public CategoryController(ICategoryServices categoryService, IMapper mapper)
         {
             this.categoryService = categoryService;
+            _mapper = mapper;
         }
+
+
 
         // GET: api/<CategoryController>
         [HttpGet]
-        public async Task<IEnumerable<Category>> Get()
+        public async Task<IEnumerable<CategoryDTO>> Get()
         {
+            IEnumerable<Category> categories = await categoryService.GetCategories();
+            IEnumerable<CategoryDTO> allCategories = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
+            return allCategories;
 
-            return await categoryService.GetCategories();
         }
-
-        // GET api/<CategoryController>/5
-        [HttpGet("{id}")]
-        public async Task<Category?> Get(int id)
-        {
-            return await categoryService.GetCategoryById(id);
-        }
+      
 
      
     }
