@@ -25,7 +25,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddDbContext<StshopContext>(option => option.UseSqlServer(builder.Configuration["connectionString"]));
+builder.Services.AddDbContext<StshopContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings:STshop")));
 
 builder.Host.UseNLog();
 

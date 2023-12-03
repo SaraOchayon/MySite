@@ -49,7 +49,7 @@ const makeOrder =async () => {
             orderItems: JSON.parse(sessionStorage.getItem("basket"))
         }
             try {
-                const res = await fetch("/api/Order", {
+                const res = await fetch("../api/Order", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

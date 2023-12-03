@@ -28,19 +28,20 @@ namespace LoginRegister.Controllers
 
         // POST: api/<loginController>
         [HttpPost("login")]
-        public  async Task<ActionResult<UserLoginDTO>> login([FromBody] UserLoginDTO userDto)
+        public  async Task<ActionResult<UserDTO>> login([FromBody] UserLoginDTO userDto)
         {
             
             User user =  await userService.GetUserByUserNameAndPassword(userDto.UserName, userDto.Password);
             if (user == null) {
                 _logger.LogError("Someone didnt register and try login");
-                _logger.LogError("tamarrrrrrrrrrrrrrrrrrrrr!!!!!!!!!!!!!");
+               
                 return BadRequest();
                
             }
            _logger.LogInformation(userDto.UserName + "  login with password" + userDto.Password);
-           
-            return Ok(userDto);
+
+            UserDTO userToReturn= _mapper.Map<User, UserDTO>(user);
+            return Ok(userToReturn);
         }
         // POST api/<loginController>
         [HttpPost]

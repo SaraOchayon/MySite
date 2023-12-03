@@ -6,7 +6,7 @@ const Login = async () => {
             password : document.getElementById("passwordRegister").value
         }
        /* const res = await fetch(`/api/login/User?userName=${userName}&password=${password}`)*/
-        const res = await fetch("api/User/login", {
+        const res = await fetch("../api/User/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ const Register = async() => {
         if (strong == 0)
             alert("Your password is weak, Enter password again!");
         else {
-            const res = await fetch("/api/user", {
+            const res = await fetch("../api/user", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -68,8 +68,9 @@ const MoveToRegister = () => {
     document.getElementById("register").style.visibility = "visible";
 }
 const Update = () => {
+
     document.getElementById("register").style.visibility = "visible";
-    const userString = JSON.parse(sessionStorage.getItem("User"))
+    const userString = JSON.parse(localStorage.getItem("User"))
     document.getElementById("userName").value = userString.userName;
     document.getElementById("password").value = userString.password;
     document.getElementById("firstName").value = userString.firstName;

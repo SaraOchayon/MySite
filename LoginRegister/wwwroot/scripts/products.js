@@ -40,7 +40,7 @@ const onLoad = () => {
 }
 const getProducts = async (url) => { 
     try {
-        const res = await fetch(`/api/Products`+url)
+        const res = await fetch(`../api/Products`+url)
         if (!res.ok) throw new Error("the products doesnt exist")
         const data = await res.json()
         document.getElementById("counter").innerText = data.length
@@ -53,7 +53,7 @@ const getProducts = async (url) => {
 }
 const getCategory = async () => {
     try {
-        const res = await fetch(`/api/Category`)
+        const res = await fetch(`../api/Category`)
         if (!res.ok) throw new Error("there is no category")
       return (await res.json())
 
@@ -111,12 +111,11 @@ const addToCart = (product) => {
 const filter = () => {
     let categories = [];
     let url='';
-        const categoryList = document.querySelectorAll(".opt")
-     
-        categoryList.forEach(cat => {
-            if (cat.checked)
-                categories.push(cat.id)
-        })
+    const categoryList = document.querySelectorAll(".opt")
+    categoryList.forEach(cat => {
+        if (cat.checked)
+            categories.push(cat.id)
+    })
     let desc = document.getElementById("nameSearch").value
     let minPrice = document.getElementById("minPrice").value
     let maxPrice = document.getElementById("maxPrice").value

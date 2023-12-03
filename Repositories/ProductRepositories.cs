@@ -23,7 +23,7 @@ namespace Repositories
                 .OrderBy(product => product.Price);
          
             List<Product> products = await query.ToListAsync();
-            //products.Include(p => p.category).ToListAsync();
+            products.Include(p => p.category).ToListAsync();
             return products;
 
 

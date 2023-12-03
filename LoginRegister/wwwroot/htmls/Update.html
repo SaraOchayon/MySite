@@ -8,7 +8,7 @@
 <body>
     <img src="../pictures/icons/1.png" />
     <input id="welcome" value="welcome " />
-    <script>document.getElementById("welcome").value += JSON.parse(sessionStorage.getItem("User")).userName</script>
+    <script>document.getElementById("welcome").value += JSON.parse(localStorage.getItem("User")).userName</script>
    
     <button onclick="Update()">Update?</button>
     <br /><br />
