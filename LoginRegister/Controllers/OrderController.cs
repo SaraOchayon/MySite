@@ -2,7 +2,8 @@
 using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
-using Repositories;
+
+using Services;
 using System.Diagnostics;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,9 +15,9 @@ namespace MySite.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IMapper _mapper;
-        IOrderRepositories orderService;
+        IOrderServices orderService;
 
-        public OrderController(IMapper mapper, IOrderRepositories orderService)
+        public OrderController(IMapper mapper, IOrderServices orderService)
         {
             _mapper = mapper;
             this.orderService = orderService;
@@ -29,7 +30,7 @@ namespace MySite.Controllers
         {
            
             Order order = _mapper.Map<OrderDTO, Order>(orderDTO);           
-              order = await orderService.AddOrder(order);
+              order = await orderService.GetOrders(order);
             OrderDTO newOrder= _mapper.Map<Order, OrderDTO>(order);
             return CreatedAtAction(nameof(Get), new { id = order.OrderId }, newOrder);
 

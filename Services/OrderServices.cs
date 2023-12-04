@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Microsoft.Extensions.Logging;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,31 @@ namespace Services
     public class OrderServices : IOrderServices
     {
         private IOrderRepositories OrderRepository;
+        private IProductRepositories ProductRepository;
+        private readonly ILogger<OrderServices> _logger;
 
-        public OrderServices(IOrderRepositories _orderRepositories)
+        public OrderServices(IOrderRepositories orderRepository, IProductRepositories productRepository, ILogger<OrderServices> logger)
         {
-            OrderRepository = _orderRepositories;
+            OrderRepository = orderRepository;
+            ProductRepository = productRepository;
+            _logger = logger;
         }
+
         public async Task<Order> GetOrders(Order order)
         {
+            double totalSum = 0;
+            foreach (OrderItem item in order.OrderItems)
+            {
+                 Product p= await ProductRepository.GetProductById(item.ProdId);
+                totalSum += p.Price;
+
+            }
+            if (totalSum != order.OrderSum)
+            {
+                _logger.LogError("someone want to stole you!!!!!!!!!!!!!!!!!!!");
+                order.OrderSum = totalSum;
+            }
+            order.OrderSum = (int)order.OrderSum;
             return await OrderRepository.AddOrder(order);
         }
 

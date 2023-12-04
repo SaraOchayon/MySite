@@ -60,7 +60,12 @@ const makeOrder =async () => {
                 if (!res.ok)
                     throw new Error("problem")
                 else {
+                    const a = await res.json()
+                   const b=123456
+                    alert("Your order created sucessfully your order num is:" + (a.orderId+b))
+                    sessionStorage.removeItem("basket")
                     localStorage.removeItem("User")
+                    window.location.href = "./products.html"
                 }
             }
             catch (ex) {

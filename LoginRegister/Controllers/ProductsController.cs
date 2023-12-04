@@ -34,8 +34,9 @@ namespace MySite.Controllers
                 return BadRequest();
             return Ok(productsDto);
         }
+
+       
       
-       
-       
+
     }
 }

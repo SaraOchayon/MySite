@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,12 @@ namespace Repositories
         }
         public async Task<Order> AddOrder(Order order)
         {
-
-          
+            // List<Order> l=await _StshopContext.Orders.Include(ord=>ord.OrderItems).ToListAsync();
+           
             await _StshopContext.Orders.AddAsync(order);
             await _StshopContext.SaveChangesAsync();
             return order;
+           
 
 
         }

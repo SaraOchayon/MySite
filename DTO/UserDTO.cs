@@ -13,6 +13,8 @@ namespace DTO
         [EmailAddress]
         public string UserName { get; set; } = null!;
 
+        public int UserId { get; set; }
+
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
