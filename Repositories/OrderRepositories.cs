@@ -17,7 +17,7 @@ namespace Repositories
         {
             _StshopContext = stshopContext;
         }
-        public async Task<Order> AddOrder(Order order)
+        public async Task<Order> AddOrderAsync(Order order)
         {
            
            

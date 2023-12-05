@@ -31,7 +31,7 @@ namespace LoginRegister.Controllers
         public  async Task<ActionResult<UserDTO>> Login([FromBody] UserLoginDTO userDto)
         {
             
-            User user =  await userService.GetUserByUserNameAndPassword(userDto.UserName, userDto.Password);
+            User user =  await userService.GetUserByUserNameAndPasswordAsync(userDto.UserName, userDto.Password);
             if (user == null) {
                 _logger.LogError("Someone didnt register and try login");
                
@@ -48,7 +48,7 @@ namespace LoginRegister.Controllers
         public async Task<ActionResult<UserDTO>> AddUser([FromBody] UserDTO userDTO)
         {
             User newUser = _mapper.Map<UserDTO, User>(userDTO);
-             newUser =  await userService.AddUser(newUser);
+             newUser =  await userService.AddUserAsync(newUser);
             return CreatedAtAction(nameof(Login), new { id = newUser.UserId }, userDTO);
         }
 

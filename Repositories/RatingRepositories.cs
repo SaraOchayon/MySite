@@ -25,7 +25,7 @@ namespace Repositories
             _configuration = configuration;
         }
        
-        public async Task<Rating> AddRating(Rating rating)
+        public async Task<Rating> AddRatingAsync(Rating rating)
         {
 
 

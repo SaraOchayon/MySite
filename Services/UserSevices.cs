@@ -12,22 +12,22 @@ public class UserSevices : IUserSevices
         UserRepository = _userRepositories;
     }
 
-    public  async Task<User> AddUser(User user)
+    public  async Task<User> AddUserAsync(User user)
     {
-        return   await UserRepository.AddUser(user);
+        return   await UserRepository.AddUserAsync(user);
     }
 
-    public async  Task<User> GetUserByUserNameAndPassword(string email, string password)
+    public async  Task<User> GetUserByUserNameAndPasswordAsync(string email, string password)
     {
-        return await UserRepository.GetUserByEmailAndPassword(email, password);
+        return await UserRepository.GetUserByEmailAndPasswordAsync(email, password);
     }
-    public async Task<User> GetUserById(int id)
+    public async Task<User> GetUserByIdAsync(int id)
     {
-        return await UserRepository.GetUserById(id);
+        return await UserRepository.GetUserByIdAsync(id);
     }
     public async Task<bool> UpdateUserAsync(int id, User userToUpdate)
     {
-        return await UserRepository.UpdateUser(id, userToUpdate);
+        return await UserRepository.UpdateUserAsync(id, userToUpdate);
     }
     public int Checkpassword(string pwd)
     {

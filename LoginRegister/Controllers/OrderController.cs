@@ -30,7 +30,7 @@ namespace MySite.Controllers
         {
            
             Order order = _mapper.Map<OrderDTO, Order>(orderDTO);           
-              order = await orderService.AddOrders(order);
+              order = await orderService.AddOrdersAsync(order);
             OrderDTO newOrder= _mapper.Map<Order, OrderDTO>(order);
             return CreatedAtAction(nameof(CreateOrder), new { id = order.OrderId }, newOrder);
 

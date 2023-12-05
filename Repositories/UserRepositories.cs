@@ -14,21 +14,21 @@ public class UserRepositories : IUserRepositories
         _StshopContext = stshopContext;
     }
 
-    public async Task <User> AddUser(User user)
+    public async Task <User> AddUserAsync(User user)
     {      
         await _StshopContext.Users.AddAsync(user);
         await _StshopContext.SaveChangesAsync();
         return user;
     }
-    public async Task<User?> GetUserByEmailAndPassword(string userName, string password)
+    public async Task<User?> GetUserByEmailAndPasswordAsync(string userName, string password)
     {
         return  await _StshopContext.Users.Where(u => u.UserName == userName && u.Password == password).FirstOrDefaultAsync();           
     }
-    public async Task<User?> GetUserById(int id)
+    public async Task<User?> GetUserByIdAsync(int id)
     {
         return await _StshopContext.Users.FindAsync(id);
     }
-    public async Task<bool> UpdateUser(int id, User user)
+    public async Task<bool> UpdateUserAsync(int id, User user)
     {
         user.UserId = id;
         var res=  _StshopContext.Users.Update(user) ;

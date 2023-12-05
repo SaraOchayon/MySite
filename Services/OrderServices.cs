@@ -22,13 +22,13 @@ namespace Services
             _logger = logger;
         }
 
-        public async Task<Order> AddOrders(Order order)
+        public async Task<Order> AddOrdersAsync(Order order)
         {
             double totalSum = 0;
             foreach (OrderItem item in order.OrderItems)
             {
-                 Product p= await ProductRepository.GetProductById(item.ProdId);
-                totalSum += p.Price;
+                 Product product= await ProductRepository.GetProductByIdAsync(item.ProdId);
+                totalSum += product.Price;
 
             }
             if (totalSum != order.OrderSum)
@@ -37,7 +37,7 @@ namespace Services
                 order.OrderSum = totalSum;
             }
             order.OrderSum = (int)order.OrderSum;
-            return await OrderRepository.AddOrder(order);
+            return await OrderRepository.AddOrderAsync(order);
         }
 
 

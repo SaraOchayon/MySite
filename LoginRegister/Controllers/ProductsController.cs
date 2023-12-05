@@ -28,7 +28,7 @@ namespace MySite.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProducts(int? position, int? skip, string? desc, int? minPrice, int? maxPrice, [FromQuery] int?[] categoryIds)
         {
-            List<Product> products = (List<Product>) await productServices.GetProducts( position,  skip,   desc,   minPrice,   maxPrice,  categoryIds);
+            List<Product> products = (List<Product>) await productServices.GetProductsAsync( position,  skip,   desc,   minPrice,   maxPrice,  categoryIds);
             List <ProductDTO> productsDto=_mapper.Map<List<Product>,List< ProductDTO >>(products);
             if (productsDto == null)
                 return BadRequest();

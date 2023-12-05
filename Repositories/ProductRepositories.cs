@@ -13,7 +13,7 @@ namespace Repositories
         }
 
 
-        public async Task<IEnumerable<Product>> GetProducts(int? position, int? skip, string? desc, int? minPrice, int? maxPrice, int?[] categoryIds)
+        public async Task<IEnumerable<Product>> GetProductsAsync(int? position, int? skip, string? desc, int? minPrice, int? maxPrice, int?[] categoryIds)
         {
             var query = _StshopContext.Products.Where(product =>
            (desc == null ? (true) : (product.Description.Contains(desc)))
@@ -27,7 +27,7 @@ namespace Repositories
             return products;
 
         }
-        public async Task<Product> GetProductById(int id)
+        public async Task<Product> GetProductByIdAsync(int id)
         {
             return await _StshopContext.Products.Where(product => product.ProdId == id).FirstOrDefaultAsync();
         }

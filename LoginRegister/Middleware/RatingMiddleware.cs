@@ -31,7 +31,7 @@ namespace MySite.Middleware
                 RecordDate = DateTime.Now,
             };
 
-            ratingServices.AddRating(rating);
+            ratingServices.AddRatingAsync(rating);
             return _next(httpContext);
         }
     }

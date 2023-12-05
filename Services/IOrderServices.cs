@@ -4,6 +4,6 @@ namespace Services
 {
     public interface IOrderServices
     {
-        Task<Order> AddOrders(Order order);
+        Task<Order> AddOrdersAsync(Order order);
     }
 }

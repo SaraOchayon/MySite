@@ -4,10 +4,10 @@ namespace Services
 {
     public interface IUserSevices
     {
-        Task<User> AddUser(User user);
+        Task<User> AddUserAsync(User user);
         int Checkpassword(string pwd);
-        Task<User> GetUserByUserNameAndPassword(string email, string password);
-        Task<User> GetUserById(int id);
+        Task<User> GetUserByUserNameAndPasswordAsync(string email, string password);
+        Task<User> GetUserByIdAsync(int id);
         Task<bool> UpdateUserAsync(int id, User userToUpdate);
     }
 }

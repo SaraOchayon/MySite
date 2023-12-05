@@ -17,14 +17,11 @@ namespace Repositories
             _StshopContext = stshopContext;
         }
 
-        public async Task<IEnumerable<Category>> GetCategories()
+        public async Task<IEnumerable<Category>> GetCategoriesAsync()
         {
             return await _StshopContext.Categories.ToListAsync();
         }
-        public async Task<Category?> GetCategoryById(int id)
-        {
-            return await _StshopContext.Categories.FindAsync(id);
-        }
+       
 
     }
 }
