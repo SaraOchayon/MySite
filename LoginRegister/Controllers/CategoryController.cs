@@ -25,7 +25,7 @@ namespace MySite.Controllers
 
         // GET: api/<CategoryController>
         [HttpGet]
-        public async Task<IEnumerable<CategoryDTO>> Get()
+        public async Task<IEnumerable<CategoryDTO>> GetCategories()
         {
             IEnumerable<Category> categories = await categoryService.GetCategories();
             IEnumerable<CategoryDTO> allCategories = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);

@@ -9,16 +9,16 @@ const onLoad = () => {
     document.getElementById("itemCount").innerText = basketList.length
     document.getElementById("totalAmount").innerText = allPrice
 }
-const drawProduct = (prod) => {
+const drawProduct = (product) => {
   
-    allPrice += prod.price
+    allPrice += product.price
     const temp = document.getElementById('temp-row')
     const clone = temp.content.cloneNode(true)
 
-    clone.querySelector(".image").src = "../pictures/products/" + prod.image.trim()+".png"
-    clone.querySelector(".itemName").innerText = prod.description
-    clone.querySelector(".price").innerText = prod.price
-    clone.querySelector("button").addEventListener('click', () => deleteProduct(prod))
+    clone.querySelector(".image").src = "../pictures/products/" + product.image.trim()+".png"
+    clone.querySelector(".itemName").innerText = product.description
+    clone.querySelector(".price").innerText = product.price
+    clone.querySelector("button").addEventListener('click', () => deleteProduct(product))
 
 
     const tbody = document.querySelector('tbody');
@@ -26,10 +26,21 @@ const drawProduct = (prod) => {
 
    
 }
-const deleteProduct = (prod) => {
+const deleteProduct = (product) => {
     
     let basketList = JSON.parse(sessionStorage.getItem("basket"));
-    let basketListNew = basketList.filter(prodToDel => prodToDel.prodId != prod.prodId);
+
+    let basketListNew = [];
+    let count = 0;
+    for (let i = 0; i < basketList.length; i++) {
+
+        if (basketList[i].prodId != product.prodId || count != 0)
+
+            basketListNew.push(basketList[i])
+        else count++;
+
+    }
+ 
   
     basketListNew = JSON.stringify(basketListNew)
    
@@ -48,8 +59,14 @@ const makeOrder =async () => {
             orderDate: new Date(),
             orderItems: JSON.parse(sessionStorage.getItem("basket"))
         }
-            try {
-                const res = await fetch("../api/Order", {
+        if (order.orderItems.length == 0) {
+            alert("Cant create empty order")
+            window.location.href = "./products.html"
+        }
+            
+        else {
+             try {
+                 const res = await fetch("../api/Order", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -60,9 +77,9 @@ const makeOrder =async () => {
                 if (!res.ok)
                     throw new Error("problem")
                 else {
-                    const a = await res.json()
-                   const b=123456
-                    alert("Your order created sucessfully your order num is:" + (a.orderId+b))
+                    const orderNum = await res.json()
+                    const token=123456
+                    alert("Your order created sucessfully your order num is:" + (orderNum.orderId+token))
                     sessionStorage.removeItem("basket")
                     localStorage.removeItem("User")
                     window.location.href = "./products.html"
@@ -71,6 +88,8 @@ const makeOrder =async () => {
             catch (ex) {
                 alert("order didnt worked")
             }
+        }
+           
             
             
         }

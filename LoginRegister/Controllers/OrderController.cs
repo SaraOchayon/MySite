@@ -26,22 +26,18 @@ namespace MySite.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public async Task<ActionResult<OrderDTO>> Create([FromBody] OrderDTO orderDTO )
+        public async Task<ActionResult<OrderDTO>> CreateOrder([FromBody] OrderDTO orderDTO )
         {
            
             Order order = _mapper.Map<OrderDTO, Order>(orderDTO);           
-              order = await orderService.GetOrders(order);
+              order = await orderService.AddOrders(order);
             OrderDTO newOrder= _mapper.Map<Order, OrderDTO>(order);
-            return CreatedAtAction(nameof(Get), new { id = order.OrderId }, newOrder);
+            return CreatedAtAction(nameof(CreateOrder), new { id = order.OrderId }, newOrder);
 
        
         }
 
-        [HttpGet]
-        public string Get(int id)
-        {
-            return "string";
-        }
+      
 
     }
 }

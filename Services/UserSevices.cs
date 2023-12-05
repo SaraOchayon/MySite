@@ -29,7 +29,7 @@ public class UserSevices : IUserSevices
     {
         return await UserRepository.UpdateUser(id, userToUpdate);
     }
-    public int checkpassword(string pwd)
+    public int Checkpassword(string pwd)
     {
         var result = Zxcvbn.Core.EvaluatePassword(pwd);
         return result.Score;

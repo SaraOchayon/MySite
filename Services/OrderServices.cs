@@ -22,7 +22,7 @@ namespace Services
             _logger = logger;
         }
 
-        public async Task<Order> GetOrders(Order order)
+        public async Task<Order> AddOrders(Order order)
         {
             double totalSum = 0;
             foreach (OrderItem item in order.OrderItems)
@@ -33,7 +33,7 @@ namespace Services
             }
             if (totalSum != order.OrderSum)
             {
-                _logger.LogError("someone want to stole you!!!!!!!!!!!!!!!!!!!");
+                _logger.LogInformation("someone want to stole you!!!!!!!!!!!!!!!!!!!");
                 order.OrderSum = totalSum;
             }
             order.OrderSum = (int)order.OrderSum;

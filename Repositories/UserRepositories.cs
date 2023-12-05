@@ -19,8 +19,6 @@ public class UserRepositories : IUserRepositories
         await _StshopContext.Users.AddAsync(user);
         await _StshopContext.SaveChangesAsync();
         return user;
-
-
     }
     public async Task<User?> GetUserByEmailAndPassword(string userName, string password)
     {
@@ -33,7 +31,6 @@ public class UserRepositories : IUserRepositories
     public async Task<bool> UpdateUser(int id, User user)
     {
         user.UserId = id;
-        //var userToUpdate = await _StshopContext.Users.FindAsync(id);
         var res=  _StshopContext.Users.Update(user) ;
         await _StshopContext.SaveChangesAsync();
         return res!=null;

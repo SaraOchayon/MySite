@@ -9,10 +9,9 @@ namespace DTO
 {
     public class UserLoginDTO
     {
-        [Required]
-        [EmailAddress]
+    
         public string UserName { get; set; } = null!;
-        [Required]
+
         public string Password { get; set; } = null!;
         public int UserId { get; set; }
     }

@@ -9,7 +9,5 @@ namespace DTO
     public class OrderItemsDTO
     {
          public int ProdId { get; set; }
-
-    
     }
 }

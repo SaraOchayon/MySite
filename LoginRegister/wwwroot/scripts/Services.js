@@ -1,12 +1,12 @@
 ﻿
-const Login = async () => {
+const login = async () => {
     try {
         const user = {
             userName : document.getElementById("userNameRegister").value,
             password : document.getElementById("passwordRegister").value
         }
-       /* const res = await fetch(`/api/login/User?userName=${userName}&password=${password}`)*/
-        const res = await fetch("../api/User/login", {
+       
+        const res = await fetch("../api/User/Login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -15,7 +15,7 @@ const Login = async () => {
         
         })
         if (!res.ok)
-            throw new Error("the user doesnt exist")
+            throw new Error("The user doesnt exist please register or try again")
      
         const data = await res.json()
 
@@ -25,10 +25,10 @@ const Login = async () => {
        
     }
     catch (ex) {
-        alert( "sign in because:"+ex.message)
+        alert( "The user doesnt exist please register or try again")
     }
 }
-const Register = async() => {
+const register = async() => {
    
     try {
         const user = {
@@ -38,13 +38,13 @@ const Register = async() => {
             LastName: document.getElementById("lastName").value,
         }
         if (!user.UserName || !user.Password)
-            throw new Error("Error: all field are required");
+            throw new Error("Error: all field are required or userName not email");
 
         const strong = await checkPassword();
         if (strong == 0)
             alert("Your password is weak, Enter password again!");
         else {
-            const res = await fetch("../api/user", {
+            const res = await fetch("../api/User", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -52,23 +52,24 @@ const Register = async() => {
                 body: JSON.stringify(user)
             })
 
-
-
             if (!res.ok)
-                throw new Error("the user doesnt add")
-            alert("the user added")
+                throw new Error("The user doesnt add try again")
+            else {
+                alert("The user added")
+                document.getElementById("register").style.visibility = "hidden";
+            }
+           
         }
     }
     catch (ex) {
-        alert(ex)
+        console.log(ex)
     }
 
 }
-const MoveToRegister = () => {
+const moveToRegister = () => {
     document.getElementById("register").style.visibility = "visible";
 }
-const Update = () => {
-
+const update = () => {
     document.getElementById("register").style.visibility = "visible";
     const userString = JSON.parse(localStorage.getItem("User"))
     document.getElementById("userName").value = userString.userName;
@@ -76,23 +77,23 @@ const Update = () => {
     document.getElementById("firstName").value = userString.firstName;
     document.getElementById("lastName").value = userString.lastName;
 }
-const Save = async () => {
-    const userString = sessionStorage.getItem("User")
-    const id = JSON.parse(userString).userId
+const save = async () => {
+    const userString = localStorage.getItem("User")
+    const userId = JSON.parse(userString).userId
     const userName = document.getElementById("userName").value
     const password = document.getElementById("password").value
     const firstName = document.getElementById("firstName").value
     const lastName = document.getElementById("lastName").value
 
-    const user = { userName, password, firstName, lastName }
+    const user = { userName, password, firstName, lastName ,userId}
     if (!user.userName || !user.password )
-        throw new Error("Error: all fields are required");
+        throw new Error("Error: all fields are required or user name not email");
 
     const strong =  checkPassword();
     if (strong == 0)
         alert("Your password is weak, Enter password again!");
     try {
-        const res = await fetch(`api/User/${id}`,
+        const res = await fetch(`../api/User/${userId}`,
             {
             method: "PUT",
             headers: {
@@ -105,12 +106,13 @@ const Save = async () => {
     
         if (!res.ok)
             throw new Error("Error update user to server")
-        sessionStorage.setItem("User", JSON.stringify(user))
-       alert(`user ${JSON.parse(sessionStorage.getItem("User")).userName} was updated`)
+        localStorage.setItem("User", JSON.stringify(user))
+       alert(`user ${JSON.parse(localStorage.getItem("User")).userName} was updated`)
     }
     catch (ex)
     {
-        alert(ex.message)
+        alert("All fields are required or user name not email")
+        console.log(ex.message)
         
     }
 
@@ -119,7 +121,7 @@ const Save = async () => {
 const checkPassword = async () => {
     const pass = document.getElementById("password").value
     try {
-        const check = await fetch("/api/user/checkPassword", {
+        const check = await fetch("/api/user/CheckPassword", {
             method: 'POST',
             headers: {
                 'Content-Type': "application/json"
@@ -132,13 +134,13 @@ const checkPassword = async () => {
         const score = await check.json()
         document.getElementById("progress").value = score;
 
-        if (score > 2)
+        if (score >= 2)
             return 1;
         else
             return 0;
     }
     catch (err) {
-        alert(err)
+        console.log(err)
     }
 
 }

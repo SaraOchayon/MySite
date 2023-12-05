@@ -12,13 +12,14 @@ namespace Repositories
     {
         StshopContext _StshopContext;
 
+
         public OrderRepositories(StshopContext stshopContext)
         {
             _StshopContext = stshopContext;
         }
         public async Task<Order> AddOrder(Order order)
         {
-            // List<Order> l=await _StshopContext.Orders.Include(ord=>ord.OrderItems).ToListAsync();
+           
            
             await _StshopContext.Orders.AddAsync(order);
             await _StshopContext.SaveChangesAsync();

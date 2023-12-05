@@ -6,15 +6,15 @@ const showProducts = async (url) => {
     const divproducts = document.getElementById("ProductList")
     divproducts.replaceChildren([]);
     let productList = await getProducts(url);
-    let i=0
-for ( i = 0; i < productList.length; i++)
-    {
-    drawProduct(productList[i])
-    if (productList[i].price > max)
-        max = productList[i].price
-    if (productList[i].price < min)
-        min = productList[i].price
-    }
+    
+        for ( let i = 0; i < productList.length; i++)
+            {
+            drawProduct(productList[i])
+            if (productList[i].price > max)
+                max = productList[i].price
+            if (productList[i].price < min)
+                min = productList[i].price
+            }
     document.getElementById("minPrice").placeholder = min;
     document.getElementById("maxPrice").placeholder = max;
    
@@ -23,9 +23,8 @@ for ( i = 0; i < productList.length; i++)
 }
 const showCategories = async () => {
     let categorytList = await getCategory();
-for (let i = 0; i < categorytList.length; i++) {
+        for (let i = 0; i < categorytList.length; i++) {
     drawCategory(categorytList[i])
-
     }
 }
 const onLoad = () => {
@@ -41,35 +40,35 @@ const onLoad = () => {
 const getProducts = async (url) => { 
     try {
         const res = await fetch(`../api/Products`+url)
-        if (!res.ok) throw new Error("the products doesnt exist")
+        if (!res.ok) throw new Error("No-products!!!")
         const data = await res.json()
         document.getElementById("counter").innerText = data.length
         return (data)
      
     }
     catch (ex) {
-        alert(ex);
+        console.log(ex);
     }
 }
 const getCategory = async () => {
     try {
         const res = await fetch(`../api/Category`)
-        if (!res.ok) throw new Error("there is no category")
+        if (!res.ok) throw new Error("There is no category")
       return (await res.json())
 
     }
     catch (ex) {
-        alert(ex);
+        console.log(ex);
     }
 }
-const drawCategory = (cat) => {
+const drawCategory = (category) => {
     const categoryList = document.getElementById("categoryList")
     const template = document.getElementById("temp-category").content;
     const clone = template.cloneNode(true);
     const categoryName = clone.querySelector(".opt");
-    clone.querySelector("span.OptionName").innerText = cat.categoryName
-    categoryName.value = cat.categoryName
-    categoryName.id = cat.categoryId;
+    clone.querySelector("span.OptionName").innerText = category.categoryName
+    categoryName.value = category.categoryName
+    categoryName.id = category.categoryId;
     categoryList.appendChild(clone);
     categoryName.addEventListener('click', () => filter() );
     

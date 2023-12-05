@@ -20,16 +20,16 @@ namespace Repositories
            && ((minPrice == null) ? (true) : (product.Price >= minPrice))
            && ((maxPrice == null) ? (true) : (product.Price <= maxPrice))
            && ((categoryIds.Length == 0) ? (true) : (categoryIds.Contains(product.CategoryId))))
-           .OrderBy(product => product.Price);
+           .OrderBy(product => product.Price).Include(product => product.Category); 
 
             List<Product> products = await query.ToListAsync();
-            // products.Include(p => p.category).ToListAsync();
+          
             return products;
 
         }
         public async Task<Product> GetProductById(int id)
         {
-            return await _StshopContext.Products.Where(p => p.ProdId == id).FirstOrDefaultAsync();
+            return await _StshopContext.Products.Where(product => product.ProdId == id).FirstOrDefaultAsync();
         }
 
     }

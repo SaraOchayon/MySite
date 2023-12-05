@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using MySite.Middleware;
+using MySite.Midlleware;
 using NLog.Web;
 using Repositories;
 using Services;
@@ -20,6 +22,11 @@ builder.Services.AddTransient<IOrderServices, OrderServices>();
 builder.Services.AddTransient<ICategoryRepositories, CategoryRepositories>();
 builder.Services.AddTransient<ICategoryServices, CategoryServices>();
 
+builder.Services.AddTransient<IRatingRepositories, RatingRepositories>();
+builder.Services.AddTransient<IRatingServices, RatingServices>();
+
+builder.Services.AddTransient<ICategoryServices, CategoryServices>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddEndpointsApiExplorer();
@@ -36,10 +43,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-// Configure the HTTP request pipeline.
 
+
+    
 app.UseHttpsRedirection();
-
+app.UseRatingMiddleware();
+app.UseErrorMiddleware();
 app.UseAuthorization();
 
 app.MapControllers();

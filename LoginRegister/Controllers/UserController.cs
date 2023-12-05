@@ -28,7 +28,7 @@ namespace LoginRegister.Controllers
 
         // POST: api/<loginController>
         [HttpPost("login")]
-        public  async Task<ActionResult<UserDTO>> login([FromBody] UserLoginDTO userDto)
+        public  async Task<ActionResult<UserDTO>> Login([FromBody] UserLoginDTO userDto)
         {
             
             User user =  await userService.GetUserByUserNameAndPassword(userDto.UserName, userDto.Password);
@@ -45,22 +45,22 @@ namespace LoginRegister.Controllers
         }
         // POST api/<loginController>
         [HttpPost]
-        public async Task<ActionResult<UserDTO>> Post([FromBody] UserDTO userDTO)
+        public async Task<ActionResult<UserDTO>> AddUser([FromBody] UserDTO userDTO)
         {
             User newUser = _mapper.Map<UserDTO, User>(userDTO);
              newUser =  await userService.AddUser(newUser);
-            return CreatedAtAction(nameof(login), new { id = newUser.UserId }, userDTO);
+            return CreatedAtAction(nameof(Login), new { id = newUser.UserId }, userDTO);
         }
 
         [HttpPost("checkPassword")]
         public ActionResult CheckPassword([FromBody] string pwd)
         {
-            return Ok(userService.checkpassword(pwd));
+            return Ok(userService.Checkpassword(pwd));
         }
 
         // PUT api/<loginController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] UserDTO userToUpdateDTO)
+        public async Task<ActionResult> UpdateUser(int id, [FromBody] UserDTO userToUpdateDTO)
         {
             User userToUpdate = _mapper.Map<UserDTO, User>(userToUpdateDTO);
             if ( await userService.UpdateUserAsync(id, userToUpdate))

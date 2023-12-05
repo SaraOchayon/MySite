@@ -10,7 +10,7 @@
     <input id="welcome" value="welcome " />
     <script>document.getElementById("welcome").value += JSON.parse(localStorage.getItem("User")).userName</script>
    
-    <button onclick="Update()">Update?</button>
+    <button onclick="update()">Update?</button>
     <br /><br />
           <div id="register" style="visibility:hidden">
               <label>user name</label>
@@ -26,7 +26,7 @@
               <label>last name</label>
               <input id="lastName" />
               <br />    <br />
-              <button onclick="Save()">Save</button>
+              <button onclick="save()">Save</button>
           </div>
     <a href="Products.html"  >are you want to start the shopping?</a>
 </body>
