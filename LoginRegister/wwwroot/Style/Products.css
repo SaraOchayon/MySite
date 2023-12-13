@@ -83,7 +83,7 @@ p.description{
     opacity: 0.7;
 }
 .bar {
-    background-color: black;
+    background-color: greenyellow;
     height: 35px;
 }
 
@@ -167,7 +167,7 @@ p.description{
     padding-bottom: 10px;
     position: absolute;
     z-index: 102;
-    background-color: deeppink;
+    background-color: greenyellow;
     font-family: Arial;
     font-size: 20px;
     min-height:100%;
@@ -223,3 +223,13 @@ p.description{
         .pagination a:hover:not(.active) {
             background-color: #ddd;
         }
+a{
+    color:greenyellow
+}
+goToCartLink {
+    color: greenyellow
+}
+.Checkout
+{
+ color:greenyellow
+}

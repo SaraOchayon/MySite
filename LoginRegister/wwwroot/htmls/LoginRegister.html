@@ -2,11 +2,12 @@
 <html>
 <head>
     <script src="../scripts/Services.js"></script>
+    <link href="../Style/loginRegister.css" rel="stylesheet" />
     <meta charset="utf-8" />
     <title></title>
 </head>
 <body>
-
+  
     <label>user name</label>
     <input id="userNameRegister" />
     <br />    <br />
@@ -24,9 +25,9 @@
         <br />    <br />
         <label>password</label>
         <input id="password" type="password" />
-     
+
         <button onclick="checkPassword()">checkPassword</button>
-         <progress id="progress" value="0" max="4"></progress><br />
+        <progress id="progress" value="0" max="4"></progress><br />
         <br />    <br />
         <label>first name</label>
         <input id="firstName" />
@@ -35,8 +36,8 @@
         <input id="lastName" />
         <br />    <br />
 
-        <button onclick="register()">register</button>
+        <button onclick="register()" class="LogIn">register</button>
     </div>
-    
+
 </body>
 </html>

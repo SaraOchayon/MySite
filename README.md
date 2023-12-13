@@ -26,7 +26,7 @@ Swashbuckle
 Installation
 Clone the repository to your local machine.
 Open the project in your preferred IDE.
-Migration in cmd the entities.
+run the script to use my DB in SQL server
 Run the application.
 
 Usage

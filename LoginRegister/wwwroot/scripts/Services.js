@@ -53,7 +53,7 @@ const register = async() => {
             })
 
             if (!res.ok)
-                throw new Error("The user doesnt add try again")
+               alert("The user doesnt add please try again")
             else {
                 alert("The user added")
                 document.getElementById("register").style.visibility = "hidden";
@@ -107,6 +107,7 @@ const save = async () => {
         if (!res.ok)
             throw new Error("Error update user to server")
         localStorage.setItem("User", JSON.stringify(user))
+        document.getElementById("register").style.visibility = "hidden";
        alert(`user ${JSON.parse(localStorage.getItem("User")).userName} was updated`)
     }
     catch (ex)
